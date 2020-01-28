@@ -13,7 +13,8 @@ const {
   getTodosService,
   getTodoByIdService,
   editTodoService,
-  deleteTodoService
+  deleteTodoService,
+  getTodosByProjectIdService
 } = require("../todo_service");
 
 let createTodoTest = async () => {
@@ -97,6 +98,18 @@ let deleteTodoTest = async todoId => {
   }
 };
 
+let getTodoByProjectIdServiceTest = async () => {
+  const params = {
+    projectId: "4jOfLfzb0vUIptM0mBo1"
+  };
+  try {
+    let resp = await getTodosByProjectIdService(db, params);
+    console.log(resp);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 let run = async () => {
   console.log("Create Todo");
   let todoId = await createTodoTest();
@@ -108,6 +121,8 @@ let run = async () => {
   await editTodoTest(todoId);
   console.log("Delete Todo");
   await deleteTodoTest(todoId);
+  console.log("Get Todos by ProjectId")
+  await getTodoByProjectIdServiceTest();
 };
 
 run();

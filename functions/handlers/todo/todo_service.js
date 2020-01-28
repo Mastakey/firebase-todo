@@ -79,6 +79,28 @@ exports.getTodoByIdService = async (db, params, user) => {
   }
 };
 
+exports.getTodosByProjectIdService = async (db, params, user) => {
+  try {
+    const projectId = params.projectId;
+    let allTodos = await db
+      .collection("todo")
+      .where("projectId", "==", projectId)
+      .orderBy("createdAtTimestamp", "desc")
+      .get();
+    let todos = [];
+    allTodos.forEach(doc => {
+      todos.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    return { status: 200, response: todos };
+  } catch (err) {
+    err.function = "getTodosByProjectIdService";
+    throw err;
+  }
+};
+
 exports.editTodoService = async (db, params, user) => {
   try {
     let date = new Date();
