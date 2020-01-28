@@ -24,7 +24,8 @@ const {
   getTodos,
   getTodoById,
   editTodo,
-  deleteTodo
+  deleteTodo,
+  getTodosByProjectId
 } = require("./handlers/todo/todo_controller");
 
 //User routes
@@ -44,6 +45,7 @@ app.delete("/project/:projectId", FBAuth, deleteProject);
 app.post("/todo", FBAuth, createTodo);
 app.get("/todo", FBAuth, getTodos);
 app.get("/todo/:todoId", FBAuth, getTodoById);
+app.get("/project/:projectId/todo", FBAuth, getTodosByProjectId);
 app.put("/todo/:todoId", FBAuth, editTodo);
 app.delete("/todo/:todoId", FBAuth, deleteTodo);
 
