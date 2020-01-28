@@ -4,7 +4,8 @@ const {
   getTodosService,
   getTodoByIdService,
   editTodoService,
-  deleteTodoService
+  deleteTodoService,
+  getTodosByProjectIdService
 } = require("./todo_service");
 
 exports.createTodo = async (req, res) => {
@@ -34,6 +35,20 @@ exports.getTodoById = async (req, res) => {
       todoId: req.params.todoId
     };
     let resp = await getTodoByIdService(db, params, req.user);
+    return res.status(resp.status).json(resp.response);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json(err);
+  }
+};
+
+exports.getTodosByProjectId = async (req, res) => {
+  try {
+    const params = {
+      ...req.body,
+      projectId: req.params.projectId
+    };
+    let resp = await getTodosByProjectIdService(db, params, req.user);
     return res.status(resp.status).json(resp.response);
   } catch (err) {
     console.error(err);

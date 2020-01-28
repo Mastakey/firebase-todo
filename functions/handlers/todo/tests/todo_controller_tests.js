@@ -127,6 +127,21 @@ let deleteTodo = async function(headers, id) {
   }
 };
 
+let getTodosByProjectId = async function(headers, projectId) {
+  try {
+    let objRes = await axios.get(apiUrl + "/project/" + projectId + "/todo", {
+      headers: headers
+    });
+    console.log(objRes.status);
+    console.log(objRes.statusText);
+    console.log(objRes.data);
+  } catch (err) {
+    console.error(err.response.status);
+    console.error(err.response.statusText);
+    console.error(err.response.data);
+  }
+};
+
 let run = async function() {
   console.log("Login");
   let headers = await login();
@@ -140,6 +155,8 @@ let run = async function() {
   await editTodo(headers, id);
   console.log("Delete Todo Run");
   await deleteTodo(headers, id);
+  console.log("Get Todo by Project Run");
+  await getTodosByProjectId(headers, "");
 };
 
 run();
